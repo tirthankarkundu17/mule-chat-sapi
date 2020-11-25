@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="user_pk" format="json">
+      <types:shape format="weave" example="examples/payload.json"><![CDATA[%dw 2.0
+
+type user_pk = {|
+  generatedKeys: {| "last_insert_rowid()": Number {"typeId": "int"} |}, 
+  affectedRows: Number {"typeId": "int"}
+|} {"example": "{\\\"generatedKeys\\\":{\\\"last_insert_rowid()\\\":3},\\\"affectedRows\\\":1}"}
+
+]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#a104263e-293d-4586-a46f-480c4171ddcb">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="user_pk"/>
+        </types:message>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>

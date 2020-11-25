@@ -1,0 +1,84 @@
+#%RAML 1.0
+title: mule-chat-sapi
+description: Set of endpoints to add user and rooms for chat application
+
+types:
+  User: !include dataType/User.raml
+  Room: !include dataType/Room.raml
+
+/users:
+  get:
+    description: This endpoint is used to get all users
+    responses:
+      200:
+        body:
+          application/json:
+            type: User[]
+  post:
+    description: This endpoint is used to add an user
+    body:
+      application/json:
+        type: User
+    responses:
+      201:
+        body:
+          application/json:
+            example: !include examples/users_post.json
+  /{userId}:
+      get:
+        description: This endpoint is used to get a particular users
+        responses:
+          200:
+            body:
+              application/json:
+                type: User
+      put:
+        description: This endpoint is used to update details of an already added user recognized by the userId
+        body:
+          application/json:
+            type: User
+        responses:
+          200:
+            body:
+              application/json:
+                example: !include examples/users_put.json
+      delete:
+        description: This endpoint is used to delete an user
+        responses:
+          200:
+            body:
+              application/json:
+                example: !include examples/users_delete.json
+/room:
+  get:
+    description: Get all room and user ids in the room
+    responses:
+      200:
+        body:
+          application/json:
+            type: Room[]
+  post:
+    description: This endpoint is used to add an user to a room
+    body:
+      application/json:
+        type: Room
+    responses:
+      201:
+        body:
+          application/json:
+            example: !include examples/join_post.json
+  /{roomId}:
+    description: This endpoint is used to get all the users in the roomId
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: User[]
+    delete:
+        description: This endpoint is used to delete a room
+        responses:
+          200:
+            body:
+              application/json:
+                example: !include examples/room_delete.json
